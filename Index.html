@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <title>Color Image Processing</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.1.min.js"></script>
+        <script>
+            
+        </script>
+  <style>
+    body {
+      color: #c2c2c2;
+      background-color: black;
+    }
+    #header {
+      background-color: #171717;
+      background-image: url("images/iiit.png");
+      background-repeat: no-repeat;
+      width: 1000px;
+      height: 100px;
+    }
+    #leftBox1 {
+      position: relative;
+      left: -350px;
+      text-align: left;
+      width:300px ;
+
+    }
+    #instructionBox {
+      border: 1px solid #c2c2c2;
+      width:300px;
+      height: 55px;
+      position: relative;
+      left:-350px;
+    }
+    #instructionBox2 {
+      border: 1px solid #c2c2c2;
+      width:300px;
+      height: 50px;
+      position: relative;
+      left:-350px;
+      display:none;
+    }
+    #buttons1 {
+      position: relative;
+      left:-400px;
+      top:10px;
+    }
+
+    #buttons2 {
+     
+      position: relative;
+      left:-410px;
+      top:20px;
+    }
+
+    #colorSpacingBox {
+
+      position:relative;
+      left:-350px;
+      border:1px solid grey;
+      top:40px;
+      height:125px;
+      width:300px;
+      text-align: left;
+    }
+ 
+
+    #imageGrid {
+      position: relative;
+      left:-455px;
+      top:-700px;
+    }
+    #imagePlanes {
+      position:relative;
+      border:2px solid grey ;
+      top:-330px;
+      left:150px;
+      width:670px;
+      height:220px;
+    }
+        #opimagePlanes1 {
+      position:relative;
+      border:2px solid grey ;
+      top:-360px;
+      left:150px;
+      width:670px;
+      height:220px;
+    }
+            #opimagePlanes2 {
+      position:relative;
+      border:2px solid grey ;
+      top:-360px;
+      left:150px;
+      width:670px;
+      height:220px;
+    }
+            #opimagePlanes3 {
+      position:relative;
+      border:2px solid grey ;
+      top:-360px;
+      left:150px;
+      width:670px;
+      height:220px;
+    }
+  </style>
+</head>
+<body>
+  <center>
+    <div id = "header">
+    <center><h1>Virtual Lab for Image Processing</h1></center>
+    </div>
+    <div id = "leftBox1">
+      <h2>Color Image Processing</h2>
+    </div>
+    <div id = "instructionBox">
+      Start the Experiment by clicking on 'Select Image' and selecting an Input Image from the Image Grid
+    </div>
+    <div id = "instructionBox2">
+      Note down the results
+    </div>
+    <div id = "buttons1" style = "border-radius: 10px">
+      <input type = "button" id = "selectImage" value = "Select Images">
+      <input type = "button" id = "Reset" value = "Re set">
+      <input type = "button" id = "Run" value = "Run">
+    </div>
+    <div id = "buttons2" style = "border-radius: 10px">
+      <input type = "button" id = "ColorSpacing" value = "Color Spacing">
+      <input type = "button" id = "Processing" value = "Processing">
+    </div>
+    <div id = "colorSpacingBox">
+      Select Color Spacing:
+      <div id = "colorSpacingButtons" style =  "display: block;">
+      <input type = "radio" name = "csp" id = "HSI" checked = "True" ><span>HSI</span><br>
+      <input type = "radio" name = "csp" id = "CMY"><span>CMY</span><br>
+      <input type = "radio" name = "csp" id = "YCrCb"><span>YCrCb</span>
+      </div>
+      <div id = "processingButtons"  style = "display: none; ">
+      <input type = "radio" name = "csp2" id = "HSI1"><span>HSI</span><br>
+      <input type = "radio" name = "csp2" id = "CMY1"><span>CMY</span><br>
+      <input type = "radio" name = "csp2" id = "RGB"><span>RGB</span>
+      </div>
+      <div id = "parameters" style = "display:none">
+        Apply Parameters to:<br>
+      <div id = "parameters1" style = "display:none;">
+        <input type = "checkbox"  id = "Hue"><span>Hue</span><br>
+        <input type = "checkbox" id = "Saturation"><span>Saturation</span><br>
+        <input type = "checkbox" id = "Intensity"><span>Intensity</span><br>
+      </div>
+      <div id = "parameters2" style = "display:none;">
+        <input type = "checkbox" id = "Cyan" ><span>Cyan</span><br>
+        <input type = "checkbox" id = "Magenta"><span>Magenta</span><br>
+        <input type = "checkbox" id = "Yellow"><span>Yellow</span><br>
+      </div>
+
+      <div id = "parameters3" style = "display:none;">
+        <input type = "checkbox" id = "Red"><span>Red</span><br>
+        <input type = "checkbox" id = "Green"><span>Green</span><br>
+        <input type = "checkbox" id = "Blue"><span>Blue</span><br>
+      </div>
+      <div id = "linearAndHist" style = "position:relative;top:10px">
+        <input type = "button" style = "border-radius: 10px;" id = "linear" value = "Linear">
+        <input type = "button" style = "border-radius: 10px;" id = "histogram" value = "Histogram">
+      </div>
+      <div style = "position: relative;top:20px; display:block;" id = "linearfunction">
+        f(r) = 
+        <p style =  "font-size: 15px; position: relative; top:-33px; left:40px" id = "eqnslope"></p><br>
+        <span style = "position:relative; top:-30px">Slope (m): </span><span id = "slope" style =  "font-size: 15px; position: relative; top:-30px; left:10px"></span>
+        <div class="slidecontainer" style = "position:relative; top:-20px">
+            <input type="range" value="0" step="0.1" min="-57.3" max="57.3" class = "slider" id = "myRange" style = "width:300px">
+        </div>
+
+        <span style = "position:relative; top:-20px"> Offset (c):</span> <span id = "offset" style =  "font-size: 15px; position: relative; top: -20px; left: 10px;"></span>
+        <div class="slidecontainer" style = "position:relative; top:-20px">
+            <input type="range" value="0" step="0.1" min="-225" max="225" class = "slider" id = "myOffsetRange" style = "width:300px">
+        </div>
+
+      </div>
+      </div>
+    </div>
+    <h3 id = "ipScript" style = " position:relative; top:-300px; left:-100px;width:300px; height:40px;display:block">Input Images</h3>
+  <div id = "imagePlanes" style = "display:block">
+
+    <img id = "inputImage" width = 150 height = 150 style = " position: relative;top:20px;border: solid white 1px;">
+    <canvas id = "redCanvas" width = 150 height = 150 style= "position : relative;left:5px;top: 20px;border: solid white 1px;"  ></canvas>
+    <canvas id = "greenCanvas" width = 150 height = 150  style= "position : relative;left:5px;top: 20px; border: solid white 1px;"></canvas>
+    <canvas id = "blueCanvas" width = 150 height = 150  style= "position : relative;left:5px;;top:20px; border: solid white 1px;"></canvas>
+    <span style = "position:relative;left:-140px; top:20px;">Original Image</span>
+    <span style = "position:relative;top:20px;left:-80px;color:red">Red Plane</span>
+    <span style = "position:relative;top:20px;left:5px;color:green">Green Plane</span>
+    <span style = "position:relative;top:20px;left:80px;color:blue">Blue Plane</span>
+  </div>
+      <h3 id = "opScript" style = " position:relative; top:-340px; left:-100px;width:300px; height:40px;display:block">Output Images</h3>
+  <div id = "opimagePlanes1" style = "display:block">
+
+   
+    <canvas id = "hueCanvas" width = 150 height = 150 style= "position : relative;left:75px;top: 20px;border: solid white 1px;"  ></canvas>
+    <canvas id = "saturationCanvas" width = 150 height = 150  style= "position : relative;left:75px;top: 20px; border: solid white 1px;"></canvas>
+    <canvas id = "intensityCanvas" width = 150 height = 150  style= "position : relative;left:75px;;top:20px; border: solid white 1px;"></canvas>
+    <span style = "position:relative;top:40px;left:-380px;color:white">Hue Plane</span>
+    <span style = "position:relative;top:40px;left:-300px;color:white">Saturation Plane</span>
+    <span style = "position:relative;top:20px;left:125px;color:white">Intensity Plane</span>
+
+  </div>
+  <div id = "opimagePlanes2" style = "display:none">
+
+    <center>
+          <canvas id = "cyanCanvas" width = 150 height = 150 style= "position : relative;left:75px;top: 20px;border: solid white 1px;"  ></canvas>
+    <canvas id = "magentaCanvas" width = 150 height = 150  style= "position : relative;left:75px;top: 20px; border: solid white 1px;"></canvas>
+    <canvas id = "yellowCanvas" width = 150 height = 150  style= "position : relative;left:75px;;top:20px; border: solid white 1px;"></canvas>
+    <span style = "position:relative;top:40px;left:-390px;color:white">Cyan Plane</span>
+    <span style = "position:relative;top:40px;left:-310px;color:white">Magenta Plane</span>
+    <span style = "position:relative;top:20px;left:120px;color:white">Yellow Plane</span>
+    </center>
+  </div>
+  <div id = "opimagePlanes3" style = "display:none">
+
+    <canvas id = "luminanceCanvas" width = 150 height = 150 style= "position : relative;left:75px;top: 20px;border: solid white 1px;"  ></canvas>
+    <canvas id = "CbCanvas" width = 150 height = 150  style= "position : relative;left:75px;top: 20px; border: solid white 1px;"></canvas>
+    <canvas id = "CrCanvas" width = 150 height = 150  style= "position : relative;left:75px;;top:20px; border: solid white 1px;"></canvas>
+    <span style = "position:relative;top:40px;left:-390px;color:white">Luminence</span>
+    <span style = "position:relative;top:40px;left:-310px;color:white">Blue Chroma</span>
+    <span style = "position:relative;top:20px;left:120px;color:white">RedChroma</span>
+  </div>
+  <div id = "io" style = "display:none;position:relative;left:120px;top:-270px; border:1px solid white;height:300px; width:600px">
+    <img id = "finalInput" width = 150 height = 150 style = "position:relative;top:75px;left:25px; border:1px solid white;">
+    <canvas id = "finalOutput" width = 150 height = 150 style = "position:relative;top:75px;left:125px; border:1px solid white;"></canvas>
+    <span style = "position:relative; top:100px;left:-285px;font-size: 20px;">Input Image</span>
+    <span style = "position:relative;top:100px; left:-130px;font-size: 20px;">Output Image</span>
+  </div>
+  <canvas id = "graph">
+  </canvas>
+    <div id = "imageGrid" style = "display: none">
+
+
+      <div id = "image1" >
+        <img width = 100 height = 100 onclick="hideIg();myFunction(this);" style = "position: relative" src = "mosaicc/img1.jpg" >
+      </div>
+
+      <div id = "image2" >
+        <img width = 100 height = 100 onclick="hideIg(); myFunction(this);" style = "position:relative; top: -104px; left: 101px" src = "mosaicc/img2.jpg" >
+      </div>
+
+      <div id = "image3">
+        <img width = 100 height = 100 onclick="hideIg();myFunction(this);" style =  "position:relative; top: -208px; left: 202px" src = "mosaicc/img3.jpg" >
+      </div>
+
+      <div id = "image4" >
+        <img width = 100 height = 100 onclick="hideIg();myFunction(this);" style =  "position:relative; top: -211px" src = "mosaicc/img4.jpg" >
+      </div>
+
+      <div id = "image5" >
+        <img width = 100 height = 100 onclick="hideIg();myFunction(this);" style =  "position:relative; top: -314px; left:101px" src = "mosaicc/img5.jpg" >
+      </div>
+
+      <div id = "image6" >
+        <img width = 100 height = 100 onclick="hideIg();myFunction(this);" style =  "position:relative; top: -418px; left:202px" src = "mosaicc/img6.jpg" >
+      </div>
+
+      <div id = "image7" >
+        <img width = 100 height = 100 onclick="hideIg();myFunction(this);" style =  "position:relative; top: -421px; " src = "mosaicc/img7.jpg" >
+      </div>
+
+      <div id = "image8" >
+        <img width = 100 height = 100 onclick="hideIg();myFunction(this);"style =  "position:relative; top: -524px; left:101px" src = "mosaicc/img8.jpg" >
+      </div>
+
+      <div id = "image9" >
+        <img width = 100 height = 100 onclick="hideIg();myFunction(this);"style =  "position:relative; top: -628px; left:201px" src = "mosaicc/img9.jpg" >
+      </div>
+  </div>
+
+  </center>
+  <script src = "myScript.js"></script>
+
+</body>
+</html>
